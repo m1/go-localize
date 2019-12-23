@@ -74,7 +74,7 @@ You'll be able to access this using the key: `customer.messages.hello`.
 #### Suggestions
 
 It is suggested to instead of using hardcoded locale keys i.e. `en` to use the language keys included in key, i.e: `language.BritishEnglish.String()` 
-which is "en-GB"
+which is `en-GB`
 
 ### CLI
 

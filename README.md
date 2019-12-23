@@ -50,7 +50,6 @@ To then generate the localization package, add the following to your `main.go` o
 
 ```go
 //go:generate go-localize -input localizations_src -output localizations
-// 
 ```
 
 Now you'll be able to use the localization like so:

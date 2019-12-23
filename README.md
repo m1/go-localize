@@ -76,6 +76,48 @@ You'll be able to access this using the key: `customer.messages.hello`.
 It is suggested to instead of using hardcoded locale keys i.e. `en` to use the language keys included in key, i.e: `language.BritishEnglish.String()` 
 which is `en-GB`
 
+
+#### Replacements
+
+Take this replacement string for example:
+```yaml
+hello_firstname_lastname: Hello {{.firstname}} {{.lastname}}
+```
+
+To then replace `firstname` and the `lastname` variable, you can use 
+something like this:
+
+
+```go
+l := localizations.New("en", "es")
+println(l.Get("hello_firstname_lastname", &localizations.Replacements{"firstname": "steve", "lastname": "steve"}))
+```
+
+You can also append numerous replacements if you have them like so:
+
+```go
+println(l.Get("hello_firstname_lastname", &localizations.Replacements{"firstname": "steve"}, &localizations.Replacements{"lastname": "steve"}))
+```
+
+#### Locale defining and localization fallbacks
+
+You can define the locale and fallbacks using:
+```go
+l := localizations.New("en", "es")
+```
+
+Where `en` is the locale and `es` is the fallback. If no translation key-value is
+found then the key will be returned. For example
+
+```go
+println(l.Get("key_doesnt_exist")) //"key_doesnt_exist" will be printed
+```
+
+#### Translation file support
+
+We currently support JSON and YAML translation files. Please suggest
+missing file type using issues or pull requests.
+
 ### CLI
 
 Instead of using go generate you can just generate the localizations manually using `go-localize`:

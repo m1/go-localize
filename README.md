@@ -6,8 +6,8 @@
 [![Release](https://img.shields.io/github/release/m1/go-localize.svg)](https://github.com/m1/go-localize/releases/latest)
 [![codecov](https://codecov.io/gh/m1/go-localize/branch/master/graph/badge.svg)](https://codecov.io/gh/m1/go-localize)
 
-__ Simple and easy to use i18n (Internationalization and localization) engine written in Go, used for translating locale strings. 
-Use with [go generate](#go-generate) or on the [CLI](#cli). Currently supports JSON and YAML translation files __
+__Simple and easy to use i18n (Internationalization and localization) engine written in Go, used for translating locale strings. 
+Use with [go generate](#go-generate) or on the [CLI](#cli). Currently supports JSON and YAML translation files__
 
 ## Usage
 

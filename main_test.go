@@ -14,7 +14,7 @@ func Test_run(t *testing.T) {
 	dirBlank := ""
 	dirValid := "examples/localizations_src"
 	dirTestFiles := "test_files"
-
+	dirWithBad := "mock"
 	tests := []struct {
 		name    string
 		args    args
@@ -32,6 +32,14 @@ func Test_run(t *testing.T) {
 			args: args{
 				in:  &dirBlank,
 				out: &dirBlank,
+			},
+			wantErr: true,
+		},
+		{
+			name: "not valid",
+			args: args{
+				in:  &dirWithBad,
+				out: &dirTestFiles,
 			},
 			wantErr: true,
 		},

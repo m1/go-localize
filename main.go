@@ -33,32 +33,31 @@ var (
 	errFlagInputNotSet = errors.New("the flag -input must be set")
 )
 
-func init() {
-
-}
-
 func main() {
 	flag.Parse()
 
-	inputDir, outputDir, err := parseFlags(input, output)
-	if err != nil {
+	if err := run(input, output); err != nil {
 		log.Fatal(err.Error())
+	}
+}
+
+func run(in, out *string) error {
+	inputDir, outputDir, err := parseFlags(in, out)
+	if err != nil {
+		return err
 	}
 
 	files, err := getLocalizationFiles(inputDir)
 	if err != nil {
-		log.Fatal(err.Error())
+		return err
 	}
 
 	localizations, err := generateLocalizations(files)
 	if err != nil {
-		log.Fatal(err.Error())
+		return err
 	}
 
-	err = generateFile(outputDir, localizations)
-	if err != nil {
-		log.Fatal(err.Error())
-	}
+	return generateFile(outputDir, localizations)
 }
 
 func generateLocalizations(files []string) (map[string]string, error) {

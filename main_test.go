@@ -5,6 +5,46 @@ import (
 	"testing"
 )
 
+func Test_run(t *testing.T) {
+	type args struct {
+		in  *string
+		out *string
+	}
+
+	dirBlank := ""
+	dirValid := "examples/localizations_src"
+	dirTestFiles := "test_files"
+
+	tests := []struct {
+		name    string
+		args    args
+		wantErr bool
+	}{
+		{
+			name: "valid",
+			args: args{
+				in:  &dirValid,
+				out: &dirTestFiles,
+			},
+		},
+		{
+			name: "not valid",
+			args: args{
+				in:  &dirBlank,
+				out: &dirBlank,
+			},
+			wantErr: true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if err := run(tt.args.in, tt.args.out); (err != nil) != tt.wantErr {
+				t.Errorf("run() error = %v, wantErr %v", err, tt.wantErr)
+			}
+		})
+	}
+}
+
 func Test_generateLocalizations(t *testing.T) {
 	type args struct {
 		files []string

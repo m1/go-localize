@@ -1,0 +1,5 @@
+hello: hello
+how_are_you: How are you?
+whats_your_name: "What's your name?"
+hello_my_name_is: Hello my name is {{.name}}
+hello_firstname_lastname: Hello {{.firstname}} {{.lastname}}

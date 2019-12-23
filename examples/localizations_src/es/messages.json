@@ -1,0 +1,6 @@
+{
+  "hello": "Hola",
+  "how_are_you": "¿Cómo estás?",
+  "whats_your_name": "¿Cuál es tu nombre?",
+  "hello_my_name_is": "Hola, mi nombre es {{.name}}"
+}

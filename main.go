@@ -172,10 +172,6 @@ func parseCSV(value []byte, l *localizationFile) error {
 		if err != nil {
 			return err
 		}
-
-		if len(record) < 2 {
-			continue
-		}
 		localizations[record[0]] = record[1]
 	}
 	*l = localizations

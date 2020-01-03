@@ -305,13 +305,44 @@ func Test_parseCSV(t *testing.T) {
 		name    string
 		args    args
 		wantErr bool
+		want    *localizationFile
 	}{
-		// TODO: Add test cases.
+		{
+			name: "valid",
+			args: args{
+				value: []byte("test,test"),
+				l:     &localizationFile{},
+			},
+			want: &localizationFile{
+				"test": "test",
+			},
+		},
+		{
+			name: "not valid",
+			args: args{
+				value: []byte("test,test\ntest,test,test"),
+				l:     &localizationFile{},
+			},
+			wantErr: true,
+		},
+		{
+			name: "record length above 2",
+			args: args{
+				value: []byte("test,test,test"),
+				l:     &localizationFile{},
+			},
+			want: &localizationFile{"test": "test"},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if err := parseCSV(tt.args.value, tt.args.l); (err != nil) != tt.wantErr {
+			err := parseCSV(tt.args.value, tt.args.l)
+			if (err != nil) != tt.wantErr {
 				t.Errorf("parseCSV() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !reflect.DeepEqual(tt.args.l, tt.want) && !tt.wantErr {
+				t.Errorf("parseCSV() got = %v, want %v", tt.args.l, tt.want)
 			}
 		})
 	}

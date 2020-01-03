@@ -1,10 +1,13 @@
 package main
 
 import (
+	"bytes"
+	"encoding/csv"
 	"encoding/json"
 	"errors"
 	"flag"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"log"
 	"os"
@@ -12,12 +15,16 @@ import (
 	"strings"
 	"time"
 
+	"github.com/BurntSushi/toml"
 	"gopkg.in/yaml.v2"
 )
 
 const (
 	jsonFileExt = ".json"
 	yamlFileExt = ".yaml"
+	ymlFileExt  = ".yml"
+	tomlFileExt = ".toml"
+	csvFileExt  = ".csv"
 )
 
 type localizationFile map[string]string
@@ -129,10 +136,17 @@ func getLocalizationsFromFile(file string) (map[string]string, error) {
 
 	localizationFile := localizationFile{}
 	ext := filepath.Ext(file)
-	if ext == jsonFileExt {
+	switch ext {
+	case jsonFileExt:
 		err = json.Unmarshal(byteValue, &localizationFile)
-	} else {
+	case yamlFileExt, ymlFileExt:
 		err = yaml.Unmarshal(byteValue, &localizationFile)
+	case tomlFileExt:
+		_, err = toml.Decode(string(byteValue), &localizationFile)
+	case csvFileExt:
+		err = parseCSV(byteValue, &localizationFile)
+	default:
+		return nil, nil
 	}
 
 	if err != nil {
@@ -145,6 +159,27 @@ func getLocalizationsFromFile(file string) (map[string]string, error) {
 	}
 
 	return newLocalizations, nil
+}
+
+func parseCSV(value []byte, l *localizationFile) error {
+	r := csv.NewReader(bytes.NewReader(value))
+	localizations := localizationFile{}
+	for {
+		record, err := r.Read()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			return err
+		}
+
+		if len(record) < 2 {
+			continue
+		}
+		localizations[record[0]] = record[1]
+	}
+	*l = localizations
+	return nil
 }
 
 func getSlicePath(file string) []string {

@@ -70,12 +70,17 @@ func Test_generateLocalizations(t *testing.T) {
 					"mock/dir/sub/valid_json.json",
 					"mock/dir/valid_json.json",
 					"mock/dir/valid_yaml.yaml",
+					"mock/dir/valid_csv.csv",
+					"mock/dir/valid_toml.toml",
+					"mock/dir/dont_parse.txt",
 				},
 			},
 			want: map[string]string{
 				"mock.dir.sub.valid_json.test": "test",
 				"mock.dir.valid_json.test":     "test",
 				"mock.dir.valid_yaml.test":     "test",
+				"mock.dir.valid_csv.test":      "test",
+				"mock.dir.valid_toml.test":     "test",
 			},
 		},
 	}
@@ -286,6 +291,27 @@ func Test_getLocalizationFiles(t *testing.T) {
 			}
 			if !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("getLocalizationFiles() got = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func Test_parseCSV(t *testing.T) {
+	type args struct {
+		value []byte
+		l     *localizationFile
+	}
+	tests := []struct {
+		name    string
+		args    args
+		wantErr bool
+	}{
+		// TODO: Add test cases.
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if err := parseCSV(tt.args.value, tt.args.l); (err != nil) != tt.wantErr {
+				t.Errorf("parseCSV() error = %v, wantErr %v", err, tt.wantErr)
 			}
 		})
 	}

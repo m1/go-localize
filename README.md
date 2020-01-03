@@ -7,7 +7,7 @@
 [![codecov](https://codecov.io/gh/m1/go-localize/branch/master/graph/badge.svg)](https://codecov.io/gh/m1/go-localize)
 
 __Simple and easy to use i18n (Internationalization and localization) engine written in Go, used for translating locale strings. 
-Use with [go generate](#go-generate) or on the [CLI](#cli). Currently supports JSON and YAML translation files__
+Use with [go generate](#go-generate) or on the [CLI](#cli). Currently supports JSON, YAML, TOML and CSV translation files__
 
 ## Why another i18n library?
 
@@ -50,6 +50,18 @@ how_are_you: How are you?
 whats_your_name: "What's your name?"
 hello_my_name_is: Hello my name is {{.name}}
 hello_firstname_lastname: Hello {{.firstname}} {{.lastname}}
+```
+
+Example of CSV translation file:
+```csv
+hello, hello
+how_are_you, How are you?
+```
+
+Example of TOML translation file:
+```toml
+hello = "hello"
+how_are_you = "How are you?"
 ```
 
 To then generate the localization package, add the following to your `main.go` or another one of your `.go` files:

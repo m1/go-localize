@@ -13,6 +13,7 @@ package {{ .Package }}
 import (
 	"bytes"
 	"fmt"
+        "strings"
 	"text/template"
 )
 

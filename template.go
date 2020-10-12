@@ -60,6 +60,13 @@ func (t Localizer) GetWithLocale(locale, key string, replacements ...*Replacemen
 			return key
 		}
 	}
+
+        // If the str doesn't have any substitutions, no need to
+        // template.Execute.
+	if strings.Index(str, "{{") == -1 && strings.Index(str, "}}") == -1 {
+                return str
+        }
+
 	return t.replace(str, replacements...)
 }
 

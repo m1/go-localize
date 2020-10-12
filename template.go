@@ -13,7 +13,7 @@ package {{ .Package }}
 import (
 	"bytes"
 	"fmt"
-        "strings"
+	"strings"
 	"text/template"
 )
 
@@ -26,7 +26,7 @@ var localizations = map[string]string{
 type Replacements map[string]interface{}
 
 type Localizer struct {
-	Locale         string
+	Locale	 string
 	FallbackLocale string
 	Localizations  map[string]string
 }
@@ -62,11 +62,11 @@ func (t Localizer) GetWithLocale(locale, key string, replacements ...*Replacemen
 		}
 	}
 
-        // If the str doesn't have any substitutions, no need to
-        // template.Execute.
+	// If the str doesn't have any substitutions, no need to
+	// template.Execute.
 	if strings.Index(str, "{{") == -1 && strings.Index(str, "}}") == -1 {
-                return str
-        }
+		return str
+	}
 
 	return t.replace(str, replacements...)
 }

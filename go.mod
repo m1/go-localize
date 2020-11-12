@@ -1,4 +1,4 @@
-module github.com/cyx/go-localize
+module github.com/m1/go-localize
 
 go 1.13
 

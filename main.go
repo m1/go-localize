@@ -110,14 +110,27 @@ func generateFile(output string, localizations map[string]string) error {
 		return err
 	}
 
+	maxWidth := 0
+	for name := range localizations {
+		if len(name) > maxWidth {
+			maxWidth = len(name)
+		}
+	}
+
+	lineUp := func(name string) string {
+		return strings.Repeat(" ", maxWidth-len(name))
+	}
+
 	return packageTemplate.Execute(f, struct {
 		Timestamp     time.Time
 		Localizations map[string]string
 		Package       string
+		LineUp        func(string) string
 	}{
 		Timestamp:     time.Now(),
 		Localizations: localizations,
 		Package:       parent,
+		LineUp:        lineUp,
 	})
 }
 

@@ -84,6 +84,9 @@ func generateLocalizations(files []string) (map[string]string, error) {
 func getLocalizationFiles(dir string) ([]string, error) {
 	var files []string
 	err := filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
 		ext := filepath.Ext(path)
 		if !info.IsDir() && (ext == jsonFileExt || ext == yamlFileExt) {
 			files = append(files, path)
